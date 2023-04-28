@@ -17,7 +17,7 @@ interface signInData {
 type AuthContextType = {
   isAuthenticated: boolean
   user: User
-  SignIn: (data: signInData) => Promise<void>
+  signIn: (data: signInData) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(null)
   const isAuthenticated = !!user
 
-  async function SignIn({ email, password }: signInData) {
+  async function signIn({ email, password }: signInData) {
     const { token, user } = await signInRequest({
       email,
       password,
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, SignIn, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
       {children}
     </AuthContext.Provider>
   )
