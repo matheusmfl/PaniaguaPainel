@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { api } from '../services/api'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import { getApiClient } from '../services/axios'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = ['Your Profile', 'Settings']
@@ -237,6 +238,7 @@ export default function Dashboard() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { 'token@paniagua': token } = parseCookies(ctx)
+  const apiClient = getApiClient(ctx)
 
   if (!token) {
     return {
@@ -246,6 +248,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     }
   }
+
+  await apiClient()
 
   return {
     props: {},
