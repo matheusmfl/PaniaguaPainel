@@ -1,7 +1,12 @@
-import { Fragment } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import Head from 'next/head'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { AuthContext } from '../context/AuthContext'
+import Image from 'next/image'
+import { api } from '../services/api'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = ['Your Profile', 'Settings']
@@ -11,6 +16,10 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+  const { user } = useContext(AuthContext)
+  useEffect(() => {
+    api.get('/users')
+  }, [])
   return (
     <div>
       <Head>
@@ -70,10 +79,12 @@ export default function Dashboard() {
                           <div>
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                               <span className="sr-only">Open user menu</span>
-                              <img
+                              <Image
                                 className="h-8 w-8 rounded-full"
-                                src="https://github.com/diego3g.png"
+                                src={user?.avatar_url}
                                 alt=""
+                                width={32}
+                                height={32}
                               />
                             </Menu.Button>
                           </div>
@@ -162,10 +173,12 @@ export default function Dashboard() {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <img
+                    <Image
                       className="h-10 w-10 rounded-full"
-                      src="https://github.com/diego3g.png"
+                      src={user?.avatar_url}
                       alt=""
+                      width={40}
+                      height={40}
                     />
                   </div>
                   <div className="ml-3">
@@ -220,4 +233,21 @@ export default function Dashboard() {
       </main>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'token@paniagua': token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

@@ -1,7 +1,8 @@
-import { createContext, useState } from 'react'
-import { signInRequest } from '../services/auth'
-import { setCookie } from 'nookies'
+import { setCookie, parseCookies } from 'nookies'
+import { createContext, useEffect, useState } from 'react'
+import { recoverUserInformation, signInRequest } from '../services/auth'
 import Router from 'next/router'
+import { api } from '../services/api'
 
 type User = {
   name: string
@@ -26,6 +27,14 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(null)
   const isAuthenticated = !!user
 
+  useEffect(() => {
+    const { 'token@paniagua': token } = parseCookies()
+
+    if (token) {
+      recoverUserInformation().then((response) => setUser(response.user))
+    }
+  }, [])
+
   async function signIn({ email, password }: signInData) {
     const { token, user } = await signInRequest({
       email,
@@ -35,6 +44,9 @@ export function AuthProvider({ children }) {
     setCookie(undefined, 'token@paniagua', token, {
       maxAge: 60 * 60 * 24 * 7,
     })
+
+    // eslint-disable-next-line dot-notation
+    api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     setUser(user)
     Router.push('/dashboard')
