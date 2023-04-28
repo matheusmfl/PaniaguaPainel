@@ -17,7 +17,7 @@ interface signInData {
 type AuthContextType = {
   isAuthenticated: boolean
   user: User
-  signIn: (data: signInData) => Promise<void>
+  SignIn: (data: signInData) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, SignIn, user }}>
       {children}
     </AuthContext.Provider>
   )
