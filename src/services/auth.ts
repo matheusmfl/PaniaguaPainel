@@ -11,7 +11,7 @@ const delay = (amount = 750) =>
 export async function signInRequest(data: signInProps) {
   await delay()
   return {
-    token: uuid,
+    token: uuid(),
     user: {
       name: 'Matheus Fonteles',
       email: 'matheusfonteles@hotmail.com',
