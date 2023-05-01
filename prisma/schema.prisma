@@ -9,3 +9,37 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Corretor {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  isAdmin   Boolean
+  propostas Proposta[]
+  password  String
+
+  @@map("corretor")
+}
+
+model Client {
+  id           String     @id @default(uuid())
+  name         String
+  cpf          Int
+  observations String?
+  seguros      Proposta[]
+
+  @@map("client")
+}
+
+model Proposta {
+  id             String   @id @default(uuid())
+  numeroProposta String
+  seguradora     String
+  dataVencimento DateTime
+  corretor       Corretor @relation(fields: [corretorId], references: [id])
+  corretorId     String
+  client         Client   @relation(fields: [clientId], references: [id])
+  clientId       String
+
+  @@map("proposta")
+}

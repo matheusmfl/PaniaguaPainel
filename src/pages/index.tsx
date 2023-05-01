@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Head>
-        <title>Home</title>
+        <title>Página inicial</title>
       </Head>
 
       <div className="max-w-sm w-full space-y-8">
@@ -29,7 +29,7 @@ export default function Home() {
           />
 
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            Entre com seu e-mail e senha
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleSignIn)}>
@@ -46,7 +46,7 @@ export default function Home() {
                 autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                placeholder="Email"
                 {...register('email')}
               />
             </div>
@@ -61,7 +61,7 @@ export default function Home() {
                 autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
+                placeholder="Senha"
                 {...register('password')}
               />
             </div>
@@ -79,7 +79,7 @@ export default function Home() {
                 htmlFor="remember_me"
                 className="ml-2 block text-sm text-gray-900"
               >
-                Remember me
+                Lembrar-me
               </label>
             </div>
 
@@ -88,7 +88,7 @@ export default function Home() {
                 href="#"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                Forgot your password?
+                Esqueceu sua senha?
               </a>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function Home() {
                   aria-hidden="true"
                 />
               </span>
-              Sign in
+              Logar
             </button>
           </div>
         </form>
