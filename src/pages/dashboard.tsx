@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-computed-key */
 import { Fragment, useContext, useEffect } from 'react'
 import Head from 'next/head'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
@@ -249,7 +250,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-  await apiClient()
+  await apiClient.get('/users')
 
   return {
     props: {},

@@ -17,4 +17,6 @@ export function getApiClient(ctx?: any) {
     // eslint-disable-next-line dot-notation
     api.defaults.headers['Authorization'] = `Bearer ${token}`
   }
+
+  return api
 }
