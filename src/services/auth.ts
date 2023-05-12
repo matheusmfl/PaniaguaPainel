@@ -1,32 +1,42 @@
 import { v4 as uuid } from 'uuid'
+import { api } from './api'
 
 interface signInProps {
   email: string
   password: string
 }
 
-const delay = (amount = 750) =>
-  new Promise((resolve) => setTimeout(resolve, amount))
+interface User {
+  name: string
+  email: string
+}
+
+interface UserToken {
+  token: string
+}
 
 export async function signInRequest(data: signInProps) {
-  await delay()
+  const response = await api.post('/api/signIn', data)
+  const user: User = await response.data
+
+  console.log(user)
   return {
     token: uuid(),
     user: {
-      name: 'Matheus Fonteles',
-      email: 'matheusfonteles@hotmail.com',
-      avatar_url: 'https://github.com/matheusmfl.png',
+      name: user.name,
+      email: user.email,
     },
   }
 }
 
-export async function recoverUserInformation() {
-  await delay()
+export async function recoverUserInformation({ token }: UserToken) {
+  const response = await api.post('/api/recoverUserApi', token)
+  const data: User = response.data
 
   return {
     user: {
-      name: 'Matheus Fonteles',
-      email: 'matheusfonteles@hotmail.com',
+      name: data.name,
+      email: data.email,
       avatar_url: 'https://github.com/matheusmfl.png',
     },
   }

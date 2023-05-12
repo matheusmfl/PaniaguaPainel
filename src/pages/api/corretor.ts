@@ -17,9 +17,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         data: {
           name,
           email,
-          isAdmin: false,
-          id: randomUUID(),
           password,
+          id: randomUUID(),
         },
       })
       .catch((e) => {

@@ -1,3 +1,5 @@
-import { getApiClient } from './axios'
+import axios from 'axios'
 
-export const api = getApiClient()
+export const api = axios.create({
+  baseURL: 'http://localhost:3000',
+})

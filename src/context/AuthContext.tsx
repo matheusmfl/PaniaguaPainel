@@ -7,7 +7,7 @@ import { api } from '../services/api'
 type User = {
   name: string
   email: string
-  avatar_url: string
+  avatar_url?: string
 }
 
 interface signInData {
@@ -31,7 +31,9 @@ export function AuthProvider({ children }) {
     const { 'token@paniagua': token } = parseCookies()
 
     if (token) {
-      recoverUserInformation().then((response) => setUser(response.user))
+      recoverUserInformation({ token }).then((response) =>
+        setUser(response.user),
+      )
     }
   }, [])
 

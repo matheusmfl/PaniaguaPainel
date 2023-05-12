@@ -9,13 +9,13 @@ PRAGMA foreign_keys=OFF;
 CREATE TABLE "new_corretor" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "isAdmin" BOOLEAN NOT NULL,
+    "email" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
     "password" TEXT NOT NULL
 );
-INSERT INTO "new_corretor" ("id", "isAdmin", "name", "username") SELECT "id", "isAdmin", "name", "username" FROM "corretor";
+INSERT INTO "new_corretor" ("email", "id", "name", "token") SELECT "email", "id", "name", "token" FROM "corretor";
 DROP TABLE "corretor";
 ALTER TABLE "new_corretor" RENAME TO "corretor";
-CREATE UNIQUE INDEX "corretor_username_key" ON "corretor"("username");
+CREATE UNIQUE INDEX "corretor_email_key" ON "corretor"("email");
 PRAGMA foreign_key_check;
 PRAGMA foreign_keys=ON;

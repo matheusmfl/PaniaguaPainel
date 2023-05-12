@@ -1,14 +1,14 @@
 /* eslint-disable no-useless-computed-key */
-import { Fragment, useContext, useEffect } from 'react'
+import { Fragment, useContext } from 'react'
 import Head from 'next/head'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { AuthContext } from '../context/AuthContext'
-import Image from 'next/image'
-import { api } from '../services/api'
-import { GetServerSideProps } from 'next'
-import { parseCookies } from 'nookies'
-import { getApiClient } from '../services/axios'
+// import Image from 'next/image'
+// import { api } from '../services/api'
+// import { GetServerSideProps } from 'next'
+// import { parseCookies } from 'nookies'
+// import { getApiClient } from '../services/axios'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = ['Your Profile', 'Settings']
@@ -19,9 +19,8 @@ function classNames(...classes) {
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext)
-  useEffect(() => {
-    api.get('/users')
-  }, [])
+  console.log(user)
+  // useEffect(() => { }, [])
   return (
     <div>
       <Head>
@@ -81,13 +80,13 @@ export default function Dashboard() {
                           <div>
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                               <span className="sr-only">Open user menu</span>
-                              <Image
+                              {/* <Image
                                 className="h-8 w-8 rounded-full"
                                 src={user?.avatar_url}
                                 alt=""
                                 width={32}
                                 height={32}
-                              />
+                              /> */}
                             </Menu.Button>
                           </div>
                           <Transition
@@ -175,20 +174,20 @@ export default function Dashboard() {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <Image
+                    {/* <Image
                       className="h-10 w-10 rounded-full"
                       src={user?.avatar_url}
                       alt=""
                       width={40}
                       height={40}
-                    />
+                    /> */}
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">
-                      Diego Fernandes
+                      {user.name}
                     </div>
                     <div className="text-sm font-medium leading-none text-gray-400">
-                      diego@rocketseat.com.br
+                      {user.email}
                     </div>
                   </div>
                   <button className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -221,7 +220,7 @@ export default function Dashboard() {
 
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Olá, {user.name}</h1>
         </div>
       </header>
       <main>
@@ -237,22 +236,22 @@ export default function Dashboard() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { 'token@paniagua': token } = parseCookies(ctx)
-  const apiClient = getApiClient(ctx)
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const { 'token@paniagua': token } = parseCookies(ctx)
+//   const apiClient = getApiClient(ctx)
 
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
+//   if (!token) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
 
-  await apiClient.get('/users')
+//   await apiClient.get('/users')
 
-  return {
-    props: {},
-  }
-}
+//   return {
+//     props: {},
+//   }
+// }

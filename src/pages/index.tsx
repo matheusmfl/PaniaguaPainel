@@ -2,16 +2,26 @@ import Head from 'next/head'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
+
+// import { signInRequest } from '../services/auth'
+// import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
+// import { handlerValidateUser } from './api/signIn'
+
+interface UserLogin {
+  email: string
+  password: string
+}
 
 export default function Home() {
   const { register, handleSubmit } = useForm()
   const { signIn } = useContext(AuthContext)
 
-  async function handleSignIn(data) {
+  async function handleSignIn(data: UserLogin) {
     await signIn(data)
   }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Head>
